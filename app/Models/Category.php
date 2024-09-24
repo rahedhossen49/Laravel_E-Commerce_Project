@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+ //* One To Many
+    function subcategories(){
+        return $this->hasMany(Category::class);
+    }
+
+    //* One to many Inverse
+    function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

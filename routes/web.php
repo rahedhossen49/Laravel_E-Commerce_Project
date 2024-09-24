@@ -13,8 +13,9 @@ Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::middleware('auth')->group(function(){
 
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-  Route::get('/categories',[CategoryController::class,'index'])->name('category.index');
+  Route::get('/categories/{id?}',[CategoryController::class,'index'])->name('category.index');
   Route::post('/categories/store',[CategoryController::class,'store'])->name('category.store');
   Route::get('/categories/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+  Route::patch('/categories/update/{id}',[CategoryController::class,'update'])->name('category.update');
 
 });

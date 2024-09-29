@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <div class="app-brand demo">
-    <a href="index.html" class="app-brand-link">
+    <a href="{{url('/')}}" class="app-brand-link" target="__blank">
 
        <img src="{{asset('frontend/assets/images/logo/logo.png')}}" alt="">
     </a>

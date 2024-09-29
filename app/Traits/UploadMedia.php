@@ -18,4 +18,15 @@ trait UploadMedia
             return false;
         }
     }
+
+    function MulltipleUploadMedia($galleries, $slug = 'other',$dir ='galleries'){
+
+        $uniqName = null;
+       $gallImageNameArray = [];
+        foreach ($galleries as $gallImage) {
+           $uniqName = $slug . uniqid();
+          $gallImageNameArray[] =  $this->UploadSingleMedia($gallImage, $uniqName,$dir,'');
+        }
+        return $gallImageNameArray;
+    }
 }

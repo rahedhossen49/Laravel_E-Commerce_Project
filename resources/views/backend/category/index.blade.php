@@ -31,7 +31,8 @@
                          <div class="form-input mt-2">
                             <label for="categoryicon">Category Icon</label>
                             @if ($editedCategory?->icon)
-                            <img width="80px" class="d-block my-2" src="{{asset('storage/'.$editedCategory?->icon)}}" alt="">
+                            <img width="80px" class="d-block my-2" src="{{ $category->icon ? asset('storage/'.$category->icon) : asset('storage/placeholder/placeholder.jpg') }}"
+                            alt="">
                         @endif
                             <input type="file" id="categoryicon" class="form-control" name="category_icon">
                             @error('category_icon')
@@ -41,13 +42,15 @@
                         </div>
                          {{-- ! Category icon End  --}}
 
-                        {{-- !  Category select start  --}}
+                        {{-- !  Parent Category start  --}}
                         <div class="form-input mt-2">
                             <label for="parentCategory">Parent Category</label>
                             <select class="form-control" name="parentCategory" id="parentCategory">
                                 <option disabled selected>Select a Parent Category</option>
-                                @foreach ($categories as $category)
+                                @foreach ($allCategories as $category)
+                                @if ($editedCategory?->id !== $category->id)
                                 <option {{$category->id == $editedCategory?->category_id ? 'selected' : null}} value="{{ $category->id }}">{{ $category->title }}</option>
+                                @endif
                                 @endforeach
                             </select>
                             @error('Parentcategory')
@@ -56,7 +59,7 @@
                         </div>
 
                         <button class="btn btn-primary mt-2">{{ $editedCategory ? 'Update' : 'Add'}} Category</button>
-                        {{-- !  Category select End  --}}
+                        {{-- !  Parent Category End  --}}
                     </form>
                 </div>
             </div>
@@ -101,8 +104,13 @@
                             <tr>
                                 <td>--</td>
                                 <td>
-                                    <img width="80px"
+                                    {{-- * This code no show placeholder image  --}}
+                                    {{-- <img width="80px"
                                         src="{{asset('storage/'.$subcategory->icon) }}"
+                                        alt=""> --}}
+                                        {{-- * this code placeholder image not show --}}
+                                        <img width="80px"
+                                        src="{{$subcategory->icon ?  asset('storage/'.$subcategory->icon) : asset('storage/placeholder/placeholder.jpg') }}"
                                         alt="">
                                     {{ $subcategory->title }}
                                 </td>

@@ -32,4 +32,11 @@ class Category extends Model
     function category(){
         return $this->belongsTo(Category::class);
     }
+
+
+
+    function products(){
+
+      return $this->belongsToMany(Product::class);
+    }
 }

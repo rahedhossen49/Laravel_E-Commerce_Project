@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function(){
   Route::post('/categories/store',[CategoryController::class,'store'])->name('category.store');
   Route::get('/categories/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
   Route::patch('/categories/update/{id}',[CategoryController::class,'update'])->name('category.update');
-
+ Route::get('/categories/featured/{id}',[CategoryController::class,'featured'])->name('category.featured');
 
 
   // * Products Routes

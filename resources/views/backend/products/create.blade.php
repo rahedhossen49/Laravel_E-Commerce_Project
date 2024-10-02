@@ -4,6 +4,12 @@
 
 @section('content')
 
+ {{-- * Select 2 styles Cdn With Backend layout  --}}
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+ {{-- **** Select 2 styles Cdn With Backend layout end  --}}
 
 
 <div class="card shadow">
@@ -105,9 +111,10 @@
     <textarea class="form-control" name="additional_info" ></textarea>
   </label>
 
-    <select name="categories[]" class="form-control">
-      <option value="" disabled selected >Select a Category</option>
-      <option value="">Electronics</option>
+    <select multiple  name="categories[]" class="form-control categories">
+      @foreach ($categories as $category)
+      <option value="{{$category->id}}">{{$category->title}}</option>
+      @endforeach
     </select>
 
     <div class="text-center">
@@ -120,7 +127,19 @@
 
 
 
+ {{-- * Select 2 scripts  Cdn With Backend layout  --}}
+ @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.categories').select2({
+      placeholder: "Select a Category",
+    });
+});
+</script>
+@endpush
 
+ {{-- **** Select 2 scripts  Cdn With Backend layout end  --}}
 
 
 

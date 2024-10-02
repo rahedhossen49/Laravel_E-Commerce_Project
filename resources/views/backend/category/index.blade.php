@@ -77,6 +77,7 @@
                             <tr>
                                 <th>Sl.</th>
                                 <th>Category Name</th>
+                                <th class="text-center" >Featured</th>
                                 <th class="text-center">Action</th>
                             </tr>
                             @forelse ($categories as $key => $category)
@@ -84,9 +85,13 @@
                                 <td>{{ $categories->firstItem() + $key }}</td>
                                 <td>
                                     <img width="80px"
-                                        src="{{ $category->icon ? asset('storage/'.$category->icon) : asset('storage/placeholder/placeholder.jpg') }}"
+                                        src="{{ $category->icon ? asset('storage/'.$category->icon) :asset(env('PLACEHOLDER')) }}"
                                         alt="">
                                     {{ $category->title }}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{route('category.featured',$category->id)}}" class="text-warning" title="{{$category->featured ? 'featured' : ''}}">
+                                    <i class='bx bx{{$category->featured ? 's' : ''}}-star'></i></a>
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -110,10 +115,16 @@
                                         alt=""> --}}
                                         {{-- * this code placeholder image not show --}}
                                         <img width="80px"
-                                        src="{{$subcategory->icon ?  asset('storage/'.$subcategory->icon) : asset('storage/placeholder/placeholder.jpg') }}"
+                                        src="{{$subcategory->icon ?  asset('storage/'.$subcategory->icon) : asset(env('PLACEHOLDER')) }}"
                                         alt="">
                                     {{ $subcategory->title }}
                                 </td>
+
+                                <td class="text-center">
+                                    <a href="{{route('category.featured',$subcategory->id)}}" class="text-warning" title="{{$subcategory->featured ? 'featured' : ''}}">
+                                    <i class='bx bx{{$subcategory->featured ? 's' : ''}}-star'></i></a>
+                                </td>
+
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <a href="{{route('category.index',$subcategory->id)}}" class="btn btn-sm btn-warning"><i class='bx bx-message-alt-edit'></i></a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Gallery;
 use App\Traits\Trait\SlugGenarator;
 use App\Traits\UploadMedia;
@@ -14,13 +15,15 @@ class ProductController extends Controller
     use UploadMedia, SlugGenarator;
     function index()
     {
+
         return view('backend.products.index');
     }
 
 
     function create()
     {
-        return view('backend.products.create');
+        $categories = Category::select('id', 'title')->get();
+        return view('backend.products.create', compact('categories'));
     }
 
     function store(Request $request)
@@ -67,11 +70,13 @@ class ProductController extends Controller
                 $gall = new Gallery();
                 $gall->product_id = $product->id;
                 $gall->image = $gallImage;
-
                 $gall->save();
             }
+
+            $product->categories()->sync($request->categories);
         }
 
         return redirect()->route('product.index')->with('sucess', 'product create successfull');
     }
+
 }

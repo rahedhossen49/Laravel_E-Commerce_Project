@@ -64,5 +64,14 @@ class CategoryController extends Controller
         }
         $category->delete();
         return back();
+
+    }
+
+
+    function featured($id){
+         $category = Category::findOrFail($id);
+         $category->featured = !$category->featured;
+         $category->save();
+         return back();
     }
 }

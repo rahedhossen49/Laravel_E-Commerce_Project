@@ -18,15 +18,19 @@ trait UploadMedia
             return false;
         }
     }
-
-    function MulltipleUploadMedia($galleries, $slug = 'other',$dir ='galleries'){
-
+    function MulltipleUploadMedia($galleries, $slug = 'other', $dir = 'galleries') {
         $uniqName = null;
-       $gallImageNameArray = [];
-        foreach ($galleries as $gallImage) {
-           $uniqName = $slug . uniqid();
-          $gallImageNameArray[] =  $this->UploadSingleMedia($gallImage, $uniqName,$dir,'');
+        $gallImageNameArray = [];
+
+        // Validate if $galleries is an array or object
+        if (!is_null($galleries) && (is_array($galleries) || is_object($galleries))) {
+            foreach ($galleries as $gallImage) {
+                $uniqName = $slug . uniqid();
+                $gallImageNameArray[] = $this->UploadSingleMedia($gallImage, $uniqName, $dir, '');
+            }
         }
+
         return $gallImageNameArray;
     }
+
 }

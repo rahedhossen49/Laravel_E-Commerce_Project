@@ -21,6 +21,7 @@
 
     @include('Include.BackendCss')
 
+  @stack('styles')
 
 
   </head>
@@ -142,30 +143,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl">
@@ -215,6 +192,9 @@
     <!-- / Layout wrapper -->
 
  @include('Include.BackendJs')
+
+
+@stack('scripts')
 
 
   </body>

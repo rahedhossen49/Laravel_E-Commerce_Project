@@ -11,15 +11,11 @@ li<!doctype html>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('Frontend/assets/images/favicon.png')}}">
 
-
     @include('include.FrontendCss')
-
 
 </head>
 
-
 <body class="sticky-header newsletter-popup-modal">
-
 
 
     <header class="header axil-header header-style-1">
@@ -160,6 +156,7 @@ li<!doctype html>
     <main class="main-wrapper">
 
     @yield('content')
+
     </main>
 
 

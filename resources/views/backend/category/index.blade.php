@@ -85,10 +85,11 @@
                                 <td>{{ $categories->firstItem() + $key }}</td>
                                 <td>
                                     <img width="80px"
-                                        src="{{ $category->icon ? asset('storage/'.$category->icon) :asset(env('PLACEHOLDER')) }}"
+                                        src="{{ $category->icon ? asset('storage/'.$category->icon) : asset(env('PLACEHOLDER')) }}"
                                         alt="">
-                                    {{ $category->title }}
+                                    {{ Str::limit($category->title, 15, '...') }}
                                 </td>
+
                                 <td class="text-center">
                                     <a href="{{route('category.featured',$category->id)}}" class="text-warning" title="{{$category->featured ? 'featured' : ''}}">
                                     <i class='bx bx{{$category->featured ? 's' : ''}}-star'></i></a>

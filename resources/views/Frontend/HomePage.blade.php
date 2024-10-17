@@ -5,13 +5,6 @@
 @section('content')
 
 
-
-
-
-
-
-
-
         <div class="axil-main-slider-area main-slider-style-1">
             <div class="container">
                 <div class="row align-items-center">
@@ -188,6 +181,7 @@
         </div>
 
         <!-- Start Categorie Area  -->
+        <div class="row">
         <div class="axil-categorie-area bg-color-white axil-section-gapcommon">
             <div class="container">
                 <div class="section-title-wrapper">
@@ -196,20 +190,21 @@
                 </div>
                 <div class="categrie-product-activation slick-layout-wrapper--15 axil-slick-arrow  arrow-top-slide">
 
-                  @foreach ($categories as $category)
-                  <div class="slick-single-layout">
-                    <div class="categrie-product" data-sal="zoom-out" data-sal-delay="300" data-sal-duration="500">
-                        <a href="{{route('frontend.category.show',$category->slug)}}">
-                            <img class="img-fluid" style="max-height:41px" src="{{ $category->icon ? asset('storage/'. $category->icon) : asset('storage/placeholder/placeholder.jpg')}}" alt="product categorie">
-                            <h6 class="cat-title">{{$category->title}}</h6>
-                        </a>
+                    @foreach ($categories as $category)
+                    <div class="slick-single-layout">
+                      <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
+                          <a href="{{route('frontend.category.show',$category->slug)}}">
+                              <img class="img-fluid" style="max-height:41px" src="{{ $category->icon ? asset('storage/'. $category->icon) : asset('storage/placeholder/placeholder.jpg')}}" alt="product categorie">
+                              <h6 class="cat-title">{{$category->title}}</h6>
+                          </a>
+                      </div>
                     </div>
-                </div>
-                  @endforeach
+                      @endforeach
 
                 </div>
             </div>
         </div>
+    </div>
         <!-- End Categorie Area  -->
 
         <!-- Poster Countdown Area  -->

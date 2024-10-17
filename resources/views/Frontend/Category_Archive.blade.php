@@ -47,14 +47,22 @@
             <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="axil-product product-style-one has-color-pick mt--40">
                     <div class="thumbnail">
-                        <a href="single-product.html">
-                            <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img sal-animate"
+                        <a href="{{route('frontend.show',$product->id)}}">
+                            <img  data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img sal-animate"
                             src="{{$product->image ? asset('storage/' . $product->image) : asset(env('PLACEHOLDER')) }}" alt="{{$product->slug}}">
-                            <img class="hover-img" src="{{ $product->featuredGallery->isNotEmpty() ? asset('storage/'. $product->featuredGallery->first()->image) : asset(env('PLACEHOLDER')) }}" alt="{{$product->slug}}">
+                           @if ($product->galleries && count($product->galleries) > 0)
+
+                           <img class="hover-img"
+                           src="{{ $product->galleries && $product->galleries->isNotEmpty() ? asset('storage/' . $product->galleries[0]->image) : asset(env('PLACEHOLDER')) }}"
+                           alt="{{ $product->slug }}">
+                         @endif
                         </a>
                         <div class="label-block label-right">
-                            <div class="product-badget">20% OFF</div>
-                        </div>
+                            <div class="product-badget">
+                                {{ ceil((($product->price - $product->selling_price) / $product->price) * 100) }}% OFF
+
+                            </div>
+                      </div>
                         <div class="product-hover-action">
                             <ul class="cart-action">
                                 <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
@@ -65,7 +73,7 @@
                     </div>
                     <div class="product-content">
                         <div class="inner">
-                            <h5 class="title"><a href="single-product.html">{{$product->title}}</a></h5>
+                            <h5 class="title"><a href="{{route('frontend.show',$product->id)}}">{{$product->title}}</a></h5>
                             <div class="product-price-variant">
                                 @if ($product->selling_price)
                                 <span class="price current-price">{{$product->selling_price}}Taka</span>
@@ -82,10 +90,11 @@
         </div>
     </div>
 
-    <div class="text-center pt--30">
+</div>
+<div class="text-center pt-5 pb-5 mt-5 ">
+
         <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
     </div>
-</div>
 
 <div class="axil-newsletter-area axil-section-gap pt--0">
     <div class="container">

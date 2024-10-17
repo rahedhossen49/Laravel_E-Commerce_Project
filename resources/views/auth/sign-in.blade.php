@@ -1,32 +1,24 @@
+
 <!doctype html>
 <html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eTrade || Sign In</title>
+    <title>eTrade @yield('title','Home Page')</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('Frontend/assets/images/favicon.png')}}">
 
-    <!-- CSS
-    ============================================ -->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/vendor/font-awesome.css">
-    <link rel="stylesheet" href="assets/css/vendor/flaticon/flaticon.css">
-    <link rel="stylesheet" href="assets/css/vendor/slick.css">
-    <link rel="stylesheet" href="assets/css/vendor/slick-theme.css">
-    <link rel="stylesheet" href="assets/css/vendor/jquery-ui.min.css">
-    <link rel="stylesheet" href="assets/css/vendor/sal.css">
-    <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/vendor/base.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+
+    @include('include.FrontendCss')
+
 
 </head>
+
 
 
 <body>
@@ -36,14 +28,10 @@
         <div class="signin-header">
             <div class="row align-items-center">
                 <div class="col-sm-4">
-                    <a href="index.html" class="site-logo"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                    <a href="index.html" class="site-logo"><img src="{{asset('Frontend/assets/images/logo/logo.png')}}" alt="logo"></a>
                 </div>
-                <div class="col-sm-8">
-                    <div class="singin-header-btn">
-                        <p>Not a member?</p>
-                        <a href="sign-up.html" class="axil-btn btn-bg-secondary sign-up-btn">Sign Up Now</a>
-                    </div>
-                </div>
+
+
             </div>
         </div>
         <!-- End Header -->
@@ -59,17 +47,18 @@
                     <div class="axil-signin-form">
                         <h3 class="title">Sign in to eTrade.</h3>
                         <p class="b2 mb--55">Enter your detail below</p>
-                        <form class="singin-form">
+                        <form action="{{route('customer.login.auth')}}" method="POST" class="singin-form">
+                            @csrf
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" class="form-control" name="email" value="annie@example.com">
+                                <input type="email" class="form-control" name="email" value="rahedhossen49@gmail.com">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" class="form-control" name="password" value="123456789">
+                                <input type="password" class="form-control" name="password" value="12345678">
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between">
-                                <button type="submit" class="axil-btn btn-bg-primary submit-btn">Sign In</button>
+                                <button type="submit" class="axil-btn btn-bg-primary submit-btn">Login</button>
                                 <a href="forgot-password.html" class="forgot-btn">Forget password?</a>
                             </div>
                         </form>
@@ -79,30 +68,8 @@
         </div>
     </div>
 
-    <!-- JS
-============================================ -->
-    <!-- Modernizer JS -->
-    <script src="assets/js/vendor/modernizr.min.js"></script>
-    <!-- jQuery JS -->
-    <script src="assets/js/vendor/jquery.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/slick.min.js"></script>
-    <script src="assets/js/vendor/js.cookie.js"></script>
-    <!-- <script src="assets/js/vendor/jquery.style.switcher.js"></script> -->
-    <script src="assets/js/vendor/jquery-ui.min.js"></script>
-    <script src="assets/js/vendor/jquery.ui.touch-punch.min.js"></script>
-    <script src="assets/js/vendor/jquery.countdown.min.js"></script>
-    <script src="assets/js/vendor/sal.js"></script>
-    <script src="assets/js/vendor/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
-    <script src="assets/js/vendor/counterup.js"></script>
-    <script src="assets/js/vendor/waypoints.min.js"></script>
 
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    @include('include.FrontendJs')
 
 </body>
 

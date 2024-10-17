@@ -79,4 +79,41 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('sucess', 'product create successfull');
     }
 
+
+
+    //  function showProduct($slug){
+
+
+    //     $product = Product::with('galleries')->where('id',$slug)->first();
+
+    //     dd($product);
+    //     return view('Frontend.singleProduct',compact('product'));
+    //  }
+
+
+
+    function showProduct($slug){
+
+
+        $product = Product::with('reviews.customer','galleries','categories')->where('slug',$slug)->first();
+
+        $product = Product::with('reviews', 'categories')->find($slug);
+
+        $relatedProducts = Product::with('reviews')->where('id','!=',$product->id)->whereHas('categories',function($q) use ($product){
+            $q->where('slug',$product->categories()->first()->slug);
+        })->take(6)->select('id','title','slug','image','price','selling_price')->with('featuredGallery')->latest()->get();
+
+
+        return view('Frontend.singleProduct',compact('product'));
+     }
+
+
+     function ajaxSearch(Request $request){
+
+        $products = Product::with('reviews')->first();
+       $products = Product::withCount('reviews')->where('title', 'LIKE', "%" . $request->search . '%')->get();
+
+       return response()->json($products);
+     }
+
 }

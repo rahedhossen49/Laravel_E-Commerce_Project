@@ -1,4 +1,4 @@
-li<!doctype html>
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -10,12 +10,17 @@ li<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('Frontend/assets/images/favicon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     @include('include.FrontendCss')
 
+
 </head>
 
+
 <body class="sticky-header newsletter-popup-modal">
+
 
 
     <header class="header axil-header header-style-1">
@@ -32,9 +37,9 @@ li<!doctype html>
                     <div class="col-sm-6">
                         <div class="header-top-link">
                             <ul class="quick-link">
-                                <li><a href="index-1.html#">Help</a></li>
-                                <li><a href="sign-up.html">Join Us</a></li>
-                                <li><a href="sign-in.html">Sign In</a></li>
+                                {{-- <li><a href="index-1.html#">Help</a></li> --}}
+                                <li><a href="{{route('customer.register')}}">Join Us</a></li>
+                                <li><a href="{{route('customer.login')}}">Sign In</a></li>
                             </ul>
                         </div>
                     </div>
@@ -55,15 +60,69 @@ li<!doctype html>
 
                         </a>
                     </div>
+
+<style>
+/* Dropdown (Submenu) styles */
+.menu-item-has-children > ul.axil-submenu {
+    display: none; /* Hide by default */
+    position: absolute;
+    top: 100%; /* Show right below the parent item */
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    z-index: 999;
+}
+.menu-item-has-children:hover > ul.axil-submenu {
+    display: block; /* Show on hover */
+}
+/* Submenu items */
+.axil-submenu li {
+    padding: 0;
+    position: relative;
+}
+.axil-submenu li a {
+    padding: 10px 20px;
+    color: #333;
+    font-size: 14px;
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.axil-submenu li a:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+/* Submenu arrow for nested categories */
+.menu-item-has-children > a:after {
+    content: " ▼";
+    font-size: 12px;
+    margin-left: 5px;
+    color: #333;
+    transition: transform 0.3s ease;
+}
+.menu-item-has-children:hover > a:after {
+    transform: rotate(180deg); /* Rotate arrow on hover */
+}
+/* Styles for nested subcategories */
+.menu-item-has-children ul.axil-submenu ul.axil-submenu {
+    left: 100%; /* Sub-submenu goes to the right of parent */
+    top: 0;
+}
+.menu-item-has-children ul.axil-submenu li.menu-item-has-children > a:after {
+    content: " ▶";
+}
+/* Add extra padding for better separation */
+.axil-submenu li.menu-item-has-children > a {
+    padding-right: 30px; /* Make room for arrow */
+}
+</style>
                     <div class="header-main-nav">
                         <!-- Start Mainmanu Nav -->
                         <nav class="mainmenu-nav">
-                            <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
-                            <div class="mobile-nav-brand">
-                                <a href="index.html" class="logo">
-                                    <img src="{{asset('Frontend/assets/images/logo/logo.png')}} " alt= "Site Logo">
-                                </a>
-                            </div>
                             <ul class="mainmenu">
                                 <li class="menu-item">
                                     <a href="{{url('/')}}">Home</a>
@@ -73,27 +132,42 @@ li<!doctype html>
                                     <a href="{{url('/')}}">Shop</a>
                                 </li>
 
-                                @foreach ($categories as $category)
+                                <!-- Product All dropdown -->
+                                <li class="menu-item-has-children">
+                                    <a href="#">Product All</a>
+                                    <ul class="axil-submenu">
+                                        <!-- Loop through categories -->
+                                        @foreach($categories as $category)
+                                            <li class="menu-item{{ count($category->subcategories) > 0 ? ' menu-item-has-children' : '' }}">
+                                                <a href="{{ route('frontend.category.show',$category->slug) }}">{{$category->title}}</a>
 
-                                <li class="menu-item{{count($category->subcategories) > 0 ? '-has-children' : ''}}">
-                                    <a href="{{route('frontend.category.show',$category->slug)}}">{{$category->title}}</a>
-                                    @if (count($category->subcategories) > 0)
-                                <ul class="axil-submenu">
-                                    @foreach ($category->subcategories as $subcategory)
-
-                                    <li><a href="{{route('frontend.category.show',$subcategory->slug)}}">{{$subcategory->title}}</a></li>
-                                    @endforeach
-                                </ul>
-                                @endif
-                            </li>
-
-                                @endforeach
+                                                <!-- Subcategories -->
+                                                @if (count($category->subcategories) > 0)
+                                                <ul class="axil-submenu">
+                                                    @foreach($category->subcategories as $subcategory)
+                                                        <li><a href="{{ route('frontend.category.show', $subcategory->slug) }}">{{$subcategory->title}}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
 
                                 <li><a href="about-us.html">About</a></li>
-
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
+<script>
+    document.querySelectorAll('.menu-item-has-children > a').forEach(function(element) {
+    element.addEventListener('click', function(e) {
+        e.preventDefault();
+        var submenu = this.nextElementSibling;
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    });
+});
+
+</script>
                         <!-- End Mainmanu Nav -->
                     </div>
                     <div class="header-action">
@@ -156,7 +230,6 @@ li<!doctype html>
     <main class="main-wrapper">
 
     @yield('content')
-
     </main>
 
 
@@ -479,83 +552,9 @@ li<!doctype html>
     <!-- Product Quick View Modal End -->
 
     <!-- Header Search Modal End -->
-    <div class="header-search-modal" id="header-search-modal">
-        <button class="card-close sidebar-close"><i class="fas fa-times"></i></button>
-        <div class="header-search-wrap">
-            <div class="card-header">
-                <form action="index-1.html#">
-                    <div class="input-group">
-                        <input type="search" class="form-control" name="prod-search" id="prod-search" placeholder="Write Something....">
-                        <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
-                    </div>
-                </form>
-            </div>
-            <div class="card-body">
-                <div class="search-result-header">
-                    <h6 class="title">24 Result Found</h6>
-                    <a href="shop.html" class="view-all">View All</a>
-                </div>
-                <div class="psearch-results">
-                    <div class="axil-product-list">
-                        <div class="thumbnail">
-                            <a href="single-product.html">
-                                <img src="{{asset('Frontend/assets/images/product/electric/p')}}roduct-09.png" alt="Yantiti Leather Bags">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
-                            </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
-                            </div>
-                            <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
-                            <div class="product-price-variant">
-                                <span class="price current-price">$29.99</span>
-                                <span class="price old-price">$49.99</span>
-                            </div>
-                            <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="axil-product-list">
-                        <div class="thumbnail">
-                            <a href="single-product.html">
-                                <img src="{{asset('Frontend/assets/images/product/electric/p')}}roduct-09.png" alt="Yantiti Leather Bags">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
-                            </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
-                            </div>
-                            <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
-                            <div class="product-price-variant">
-                                <span class="price current-price">$29.99</span>
-                                <span class="price old-price">$49.99</span>
-                            </div>
-                            <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+ @include('include.FrontendSearch')
+
     <!-- Header Search Modal End -->
 
 

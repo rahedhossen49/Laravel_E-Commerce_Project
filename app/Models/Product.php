@@ -41,4 +41,9 @@ class Product extends Model
     function featuredGallery(){
         return $this->hasMany(Gallery::class)->take(1);
     }
+
+
+    function reviews(){
+        return $this->hasMany(Review::class);
+    }
 }

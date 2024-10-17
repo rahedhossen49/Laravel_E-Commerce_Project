@@ -106,23 +106,34 @@
 
 
                                     <!-- Start Product Action Wrapper  -->
-                                    <div class="product-action-wrapper d-flex-center">
-                                        <!-- Start Quentity Action  -->
-                                        <div class="pro-qty"><input type="text" value="1"></div>
-                                        <!-- End Quentity Action  -->
+                                    @if(@auth('customer'))
+                                    @if ($product->stock > 0 )
+                                       <form action="{{route('cart.store')}}" method="POST">
+                                        @csrf
+                                        <div class="product-action-wrapper d-flex-center">
+                                            <div class="pro-qty">
+                                                <input type="text" name="qty" value="1">
+                                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            </div>
+                                            <ul class="product-action d-flex-center mb--0">
+                                                <li class="add-to-cart">
+                                                    <button type="submit" class="axil-btn btn-bg-primary">Add
+                                                        to Cart</button></li>
 
-                                        <!-- Start Product Action  -->
-                                        <ul class="product-action d-flex-center mb--0">
-                                            <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add
-                                                    to Cart</a></li>
-                                            <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i
-                                                        class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <!-- End Product Action  -->
-
+                                                <li class="wishlist"> <button type="submit"
+                                                        class="axil-btn wishlist-btn"><i class="far fa-heart"></i></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                       </form>
+                                       @endauth
+                                       @else{
+                                       <li class="add-to-cart"><a href="{{ route('customer.login') }}"
+                                        class="axil-btn btn-bg-primary">Add
+                                        to Cart</a></li>
+                                       }
+                                        @endif
                                     </div>
-                                    <!-- End Product Action Wrapper  -->
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -242,7 +253,9 @@
                                                                         </a>
                                                                         <span class="commenter-rating rating-four-star">
                                                                             {!! str()->repeat('<a href="single-product-3.html#"><i class="fas fa-star"></i></a>', $review->rating) !!}
-                                                                            {!! str()->repeat('<a href="single-product-3.html#"><i class="fas fa-star empty-rating"></i></a>', 5 - $review->rating) !!}
+                                                                            {!! str()->repeat('<a href="single-product-3.html#"><i class="far fa-star"></i></a>',
+                                                                                5 - $review->rating,
+                                                                            ) !!}
                                                                         </span>
 
 
@@ -347,6 +360,7 @@
                                 <div class="label-block label-right">
                                     <div class="product-badget">20% OFF</div>
                                 </div>
+
                                 <div class="product-hover-action">
                                     <ul class="cart-action">
                                         <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a>

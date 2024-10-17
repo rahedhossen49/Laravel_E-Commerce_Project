@@ -103,17 +103,25 @@ class ProductController extends Controller
             $q->where('slug',$product->categories()->first()->slug);
         })->take(6)->select('id','title','slug','image','price','selling_price')->with('featuredGallery')->latest()->get();
 
-
         return view('Frontend.singleProduct',compact('product'));
      }
 
 
      function ajaxSearch(Request $request){
 
-        $products = Product::with('reviews')->first();
-       $products = Product::withCount('reviews')->where('title', 'LIKE', "%" . $request->search . '%')->get();
+        $search = $request->input('search');
 
-       return response()->json($products);
+        // Fetch products with reviews count and average rating
+        $products = Product::where('title', 'like', "%$search%")
+            ->withCount('reviews') // Get total reviews count
+            ->withAvg('reviews', 'rating') // Get average of ratings
+            ->get();
+
+        return response()->json($products);
+        // $products = Product::with('reviews')->get();
+        // $products = Product::withCount('reviews')->where('title', 'LIKE', "%" . $request->search . '%')->get();
+        // // $products->avg_review = $products->reviews->avg("raitng");
+        // return response()->json($products);
      }
 
 }

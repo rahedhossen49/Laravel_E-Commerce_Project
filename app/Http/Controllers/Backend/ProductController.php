@@ -111,17 +111,13 @@ class ProductController extends Controller
 
         $search = $request->input('search');
 
-        // Fetch products with reviews count and average rating
         $products = Product::where('title', 'like', "%$search%")
-            ->withCount('reviews') // Get total reviews count
-            ->withAvg('reviews', 'rating') // Get average of ratings
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->get();
 
         return response()->json($products);
-        // $products = Product::with('reviews')->get();
-        // $products = Product::withCount('reviews')->where('title', 'LIKE', "%" . $request->search . '%')->get();
-        // // $products->avg_review = $products->reviews->avg("raitng");
-        // return response()->json($products);
+
      }
 
 }

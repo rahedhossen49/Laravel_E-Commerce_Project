@@ -32,17 +32,29 @@
 
                     let url = `/product/${product.slug}`;
 
-                    // Calculate average rating (assuming 'reviews_avg_rating' is passed from backend)
-                    let avgRating = Math.round(product.reviews_avg_rating); // Rounded average rating
+                    // Get the average rating (e.g., 3.67)
+                    let avgRating = product.reviews_avg_rating;
+
+                    // Generate stars based on the average rating
+                    let fullStars = Math.floor(avgRating);  // Number of full stars (3)
+                    let halfStar = (avgRating % 1) >= 0.5 ? 1 : 0;  // Show half star if decimal is >= 0.5
+                    let emptyStars = 5 - (fullStars + halfStar);  // Remaining empty stars
+
                     let rating = '';
 
-                    // Generate the star icons based on the average rating
-                    for (let i = 0; i < 5; i++) {
-                        if (i < avgRating) {
-                            rating += "<i class='fas fa-star'></i>"; // Filled star
-                        } else {
-                            rating += "<i class='far fa-star'></i>"; // Empty star
-                        }
+                    // Add full stars
+                    for (let i = 0; i < fullStars; i++) {
+                        rating += "<i class='fas fa-star'></i>"; // Full star
+                    }
+
+                    // Add half star
+                    if (halfStar) {
+                        rating += "<i class='fas fa-star-half-alt'></i>"; // Half star
+                    }
+
+                    // Add empty stars
+                    for (let i = 0; i < emptyStars; i++) {
+                        rating += "<i class='far fa-star'></i>"; // Empty star
                     }
 
                     let productHTML =
@@ -55,7 +67,7 @@
                             <div class="product-content">
                                 <div class="product-rating">
                                     <span class="rating-icon">
-                                        ${rating} <!-- Insert the stars here -->
+                                        ${rating} <!-- Display stars -->
                                     </span>
                                     <span class="rating-number"><span>${product.reviews_count}</span> Reviews</span>
                                 </div>

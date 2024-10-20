@@ -106,34 +106,37 @@
 
 
                                     <!-- Start Product Action Wrapper  -->
-                                    @if(@auth('customer'))
-                                    @if ($product->stock > 0 )
-                                       <form action="{{route('cart.store')}}" method="POST">
-                                        @csrf
-                                        <div class="product-action-wrapper d-flex-center">
-                                            <div class="pro-qty">
-                                                <input type="text" name="qty" value="1">
-                                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                    @if(auth('customer')->check())
+                                    @if ($product->stock > 0)
+                                        <form action="{{ route('cart.store') }}" method="POST">
+                                            @csrf
+                                            <div class="product-action-wrapper d-flex-center">
+                                                <div class="pro-qty">
+                                                    <input type="text" name="qty" value="1">
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    <input type="hidden" name="product_price" value="{{ $product->selling_price ?? $product->price }}">
+                                                </div>
+                                                <ul class="product-action d-flex-center mb--0">
+                                                    <li class="add-to-cart">
+                                                        <button type="submit" class="axil-btn btn-bg-primary">Add to Cart</button>
+                                                    </li>
+                                                    <li class="wishlist">
+                                                        <button type="submit" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></button>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <ul class="product-action d-flex-center mb--0">
-                                                <li class="add-to-cart">
-                                                    <button type="submit" class="axil-btn btn-bg-primary">Add
-                                                        to Cart</button></li>
-
-                                                <li class="wishlist"> <button type="submit"
-                                                        class="axil-btn wishlist-btn"><i class="far fa-heart"></i></button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                       </form>
-                                       @endauth
-                                       @else{
-                                       <li class="add-to-cart"><a href="{{ route('customer.login') }}"
-                                        class="axil-btn btn-bg-primary">Add
-                                        to Cart</a></li>
-                                       }
-                                        @endif
-                                    </div>
+                                        </form>
+                                    @else
+                                        <p class="text-danger">Out of stock</p>
+                                    @endif
+                                @else
+                                <ul class="product-action d-flex-center mb--0">
+                                    <li class="add-to-cart">
+                                        <a href="{{ route('customer.login') }}" class="axil-btn btn-bg-primary">Add to Cart </a>
+                                    </li>
+                                </ul>
+                                @endif
+                                </div>
                             </div>
                         </div>
                     </div>

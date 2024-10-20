@@ -47,7 +47,7 @@
             <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="axil-product product-style-one has-color-pick mt--40">
                     <div class="thumbnail">
-                        <a href="{{route('frontend.show',$product->id)}}">
+                        <a href="{{route('frontend.show',$product->slug)}}">
                             <img  data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img sal-animate"
                             src="{{$product->image ? asset('storage/' . $product->image) : asset(env('PLACEHOLDER')) }}" alt="{{$product->slug}}">
                            @if ($product->galleries && count($product->galleries) > 0)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsCustomer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,7 +17,18 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->validateCsrfTokens(except:[
+            '/success',
+            '/cancel',
+            '/fail',
+            '/ipn',
+            '/pay-via-ajax',
+        ]);
+
+        $middleware->alias([
+
+            'customer'=>IsCustomer::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

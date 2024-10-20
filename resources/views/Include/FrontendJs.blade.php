@@ -32,29 +32,27 @@
 
                     let url = `/product/${product.slug}`;
 
-                    // Get the average rating (e.g., 3.67)
                     let avgRating = product.reviews_avg_rating;
 
-                    // Generate stars based on the average rating
-                    let fullStars = Math.floor(avgRating);  // Number of full stars (3)
-                    let halfStar = (avgRating % 1) >= 0.5 ? 1 : 0;  // Show half star if decimal is >= 0.5
-                    let emptyStars = 5 - (fullStars + halfStar);  // Remaining empty stars
+
+                    let fullStars = Math.floor(avgRating);
+                    let halfStar = (avgRating % 1) >= 0.5 ? 1 : 0;
+                    let emptyStars = 5 - (fullStars + halfStar);
 
                     let rating = '';
 
-                    // Add full stars
                     for (let i = 0; i < fullStars; i++) {
-                        rating += "<i class='fas fa-star'></i>"; // Full star
+                        rating += "<i class='fas fa-star'></i>";
                     }
 
-                    // Add half star
+
                     if (halfStar) {
-                        rating += "<i class='fas fa-star-half-alt'></i>"; // Half star
+                        rating += "<i class='fas fa-star-half-alt'></i>";
                     }
 
-                    // Add empty stars
+
                     for (let i = 0; i < emptyStars; i++) {
-                        rating += "<i class='far fa-star'></i>"; // Empty star
+                        rating += "<i class='far fa-star'></i>";
                     }
 
                     let productHTML =

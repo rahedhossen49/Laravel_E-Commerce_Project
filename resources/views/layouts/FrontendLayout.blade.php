@@ -183,8 +183,8 @@
                                 </a>
                             </li>
                             <li class="shopping-cart">
-                                <a href="index-1.html#" class="cart-dropdown-btn">
-                                    <span class="cart-count">3</span>
+                                <a href="{{route('checkout')}}" class="cart-dropdown-btn">
+                                    <span class="cart-count">{{$cart}}</span>
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
@@ -557,7 +557,7 @@
 
     <!-- Header Search Modal End -->
 
-
+{{--
     <div class="cart-dropdown" id="cart-dropdown">
         <div class="cart-content-wrap">
             <div class="cart-header">
@@ -589,52 +589,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-2.html"><img src="{{asset('Frontend/assets/images/product/electric/p')}}roduct-02.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-							</span>
-                                <span class="rating-number">(4)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>255.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="5">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-3.html"><img src="{{asset('Frontend/assets/images/product/electric/p')}}roduct-03.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-							</span>
-                                <span class="rating-number">(6)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>200.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="100">
-                            </div>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
             <div class="cart-footer">
@@ -648,7 +603,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Offer Modal Start -->
     <div class="offer-popup-modal" id="offer-popup-modal">

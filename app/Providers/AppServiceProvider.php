@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -24,7 +25,9 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFive();
         View()->composer('layouts.FrontendLayout', function ($view) {
-          $view->with('categories',Category::with('subcategories')->whereNull('category_id')->select('id','slug','title','category_id')->get());
+          $view->with('cart',Cart::where('customer_id',auth('customer')->id())->count() ?? 0)->with('categories',Category::with('subcategories')->whereNull('category_id')->select('id','slug','title','category_id')->get());
         });
     }
+
+
 }

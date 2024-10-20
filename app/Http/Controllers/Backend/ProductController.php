@@ -80,31 +80,20 @@ class ProductController extends Controller
     }
 
 
+function showProduct($slug) {
 
-    //  function showProduct($slug){
+    $product = Product::with('reviews.customer', 'galleries', 'categories')->where('slug', $slug)->firstOrFail();
 
+    $relatedProducts = Product::with('reviews')->where('id', '!=', $product->id)
+        ->whereHas('categories', function($q) use ($product) {
+            $q->where('slug', $product->categories()->first()->slug);
+        })
+        ->take(6)
+        ->select('id', 'title', 'slug', 'image', 'price', 'selling_price')
+        ->with('featuredGallery')->latest()->get();
 
-    //     $product = Product::with('galleries')->where('id',$slug)->first();
-
-    //     dd($product);
-    //     return view('Frontend.singleProduct',compact('product'));
-    //  }
-
-
-
-    function showProduct($slug){
-
-
-        $product = Product::with('reviews.customer','galleries','categories')->where('slug',$slug)->first();
-
-        $product = Product::with('reviews', 'categories')->find($slug);
-
-        $relatedProducts = Product::with('reviews')->where('id','!=',$product->id)->whereHas('categories',function($q) use ($product){
-            $q->where('slug',$product->categories()->first()->slug);
-        })->take(6)->select('id','title','slug','image','price','selling_price')->with('featuredGallery')->latest()->get();
-
-        return view('Frontend.singleProduct',compact('product'));
-     }
+    return view('Frontend.singleProduct', compact('product', 'relatedProducts'));
+}
 
 
      function ajaxSearch(Request $request){

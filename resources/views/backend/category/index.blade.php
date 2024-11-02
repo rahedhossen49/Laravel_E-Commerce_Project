@@ -31,7 +31,7 @@
                          <div class="form-input mt-2">
                             <label for="categoryicon">Category Icon</label>
                             @if ($editedCategory?->icon)
-                            <img width="80px" class="d-block my-2" src="{{ $category->icon ? asset('storage/'.$category->icon) : asset('storage/placeholder/placeholder.jpg') }}"
+                            <img width="80px" class="d-block my-2" src="{{ $editedCategory->icon ? asset('storage/'.$editedCategory->icon) : asset('storage/placeholder/placeholder.jpg') }}"
                             alt="">
                         @endif
                             <input type="file" id="categoryicon" class="form-control" name="category_icon">

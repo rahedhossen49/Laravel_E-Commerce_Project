@@ -346,7 +346,7 @@
         <!-- End Shop Area  -->
 
         <!-- Start Recently Viewed Product Area  -->
-        <div class="axil-product-area bg-color-white axil-section-gap pb--50 pb_sm--30">
+        {{-- <div class="axil-product-area bg-color-white axil-section-gap pb--50 pb_sm--30">
             <div class="container">
                 <div class="section-title-wrapper">
                     <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i> Your
@@ -687,7 +687,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- End Recently Viewed Product Area  -->
 
     </main>

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait UploadMedia
 {
-    function UploadSingleMedia($media, $title = null, $dir = 'others', $old, $disk = 'public')
+    function  UploadSingleMedia($media, $title = null, $dir = 'others', $old, $disk = 'public')
     {
         if ($old) {
             Storage::disk($disk)->delete($old);

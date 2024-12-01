@@ -41,10 +41,25 @@
                                         </div>
                                         <div class="label-block">
                                             <div class="product-badget">
-                                                {{ ceil((($product->price - $product->selling_price) / $product->price) * 100) }}%
-                                                OFF
+                                                @if ($product->price > 0 && $product->selling_price >= 0)
+                                                    @php
+                                                        $discount =
+                                                            (($product->price - $product->selling_price) /
+                                                                $product->price) *
+                                                            100;
+                                                    @endphp
+
+                                                    @if ($discount > 0)
+                                                        {{ ceil($discount) }}% OFF
+                                                    @else
+                                                        0% OFF
+                                                    @endif
+                                                @else
+                                                    No Discount
+                                                @endif
                                             </div>
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -79,7 +94,6 @@
                                             <strike>{{ $product->price }}Taka</strike>
                                     </span>
                                     @endif
-                                    {{ $product->price }}Taka</span>
                                     <div class="product-rating">
                                         <div class="star-rating">
 
@@ -106,36 +120,41 @@
 
 
                                     <!-- Start Product Action Wrapper  -->
-                                    @if(auth('customer')->check())
-                                    @if ($product->stock > 0)
-                                        <form action="{{ route('cart.store') }}" method="POST">
-                                            @csrf
-                                            <div class="product-action-wrapper d-flex-center">
-                                                <div class="pro-qty">
-                                                    <input type="text" name="qty" value="1">
-                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                    <input type="hidden" name="product_price" value="{{ $product->selling_price ?? $product->price }}">
+                                    @if (auth('customer')->check())
+                                        @if ($product->stock > 0)
+                                            <form action="{{ route('cart.store') }}" method="POST">
+                                                @csrf
+                                                <div class="product-action-wrapper d-flex-center">
+                                                    <div class="pro-qty">
+                                                        <input type="text" name="qty" value="1">
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}">
+                                                        <input type="hidden" name="product_price"
+                                                            value="{{ $product->selling_price ?? $product->price }}">
+                                                    </div>
+                                                    <ul class="product-action d-flex-center mb--0">
+                                                        <li class="add-to-cart">
+                                                            <button type="submit" class="axil-btn btn-bg-primary">Add to
+                                                                Cart</button>
+                                                        </li>
+                                                        <li class="wishlist">
+                                                            <button type="submit" class="axil-btn wishlist-btn"><i
+                                                                    class="far fa-heart"></i></button>
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                <ul class="product-action d-flex-center mb--0">
-                                                    <li class="add-to-cart">
-                                                        <button type="submit" class="axil-btn btn-bg-primary">Add to Cart</button>
-                                                    </li>
-                                                    <li class="wishlist">
-                                                        <button type="submit" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        @else
+                                            <p class="text-danger">Out of stock</p>
+                                        @endif
                                     @else
-                                        <p class="text-danger">Out of stock</p>
+                                        <ul class="product-action d-flex-center mb--0">
+                                            <li class="add-to-cart">
+                                                <a href="{{ route('customer.login') }}" class="axil-btn btn-bg-primary">Add
+                                                    to Cart </a>
+                                            </li>
+                                        </ul>
                                     @endif
-                                @else
-                                <ul class="product-action d-flex-center mb--0">
-                                    <li class="add-to-cart">
-                                        <a href="{{ route('customer.login') }}" class="axil-btn btn-bg-primary">Add to Cart </a>
-                                    </li>
-                                </ul>
-                                @endif
                                 </div>
                             </div>
                         </div>
@@ -256,9 +275,7 @@
                                                                         </a>
                                                                         <span class="commenter-rating rating-four-star">
                                                                             {!! str()->repeat('<a href="single-product-3.html#"><i class="fas fa-star"></i></a>', $review->rating) !!}
-                                                                            {!! str()->repeat('<a href="single-product-3.html#"><i class="far fa-star"></i></a>',
-                                                                                5 - $review->rating,
-                                                                            ) !!}
+                                                                            {!! str()->repeat('<a href="single-product-3.html#"><i class="far fa-star"></i></a>', 5 - $review->rating) !!}
                                                                         </span>
 
 

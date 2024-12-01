@@ -80,23 +80,25 @@ class ProductController extends Controller
     }
 
 
-function showProduct($slug) {
+    function showProduct($slug)
+    {
 
-    $product = Product::with('reviews.customer', 'galleries', 'categories')->where('slug', $slug)->firstOrFail();
+        $product = Product::with('reviews.customer', 'galleries', 'categories')->where('slug', $slug)->firstOrFail();
 
-    $relatedProducts = Product::with('reviews')->where('id', '!=', $product->id)
-        ->whereHas('categories', function($q) use ($product) {
-            $q->where('slug', $product->categories()->first()->slug);
-        })
-        ->take(6)
-        ->select('id', 'title', 'slug', 'image', 'price', 'selling_price')
-        ->with('featuredGallery')->latest()->get();
+        $relatedProducts = Product::with('reviews')->where('id', '!=', $product->id)
+            ->whereHas('categories', function ($q) use ($product) {
+                $q->where('slug', $product->categories()->first()->slug);
+            })
+            ->take(6)
+            ->select('id', 'title', 'slug', 'image', 'price', 'selling_price')
+            ->with('featuredGallery')->latest()->get();
 
-    return view('Frontend.singleProduct', compact('product', 'relatedProducts'));
-}
+        return view('Frontend.singleProduct', compact('product', 'relatedProducts'));
+    }
 
 
-     function ajaxSearch(Request $request){
+    function ajaxSearch(Request $request)
+    {
 
         $search = $request->input('search');
 
@@ -106,7 +108,23 @@ function showProduct($slug) {
             ->get();
 
         return response()->json($products);
+    }
 
-     }
 
+
+    public function contact()
+    {
+
+
+        return view('layouts.Contact');
+    }
+
+
+
+    public function about()
+    {
+
+
+        return view('layouts.about');
+    }
 }
